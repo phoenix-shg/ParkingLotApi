@@ -17,5 +17,13 @@ namespace ParkingLotApi.Controllers
             parkinglots.Add(parkinglot);
             return new CreatedResult($"", parkinglot);
         }
+
+        [HttpDelete("/{name}")]
+        public List<ParkingLot> ObtainExistCompany([FromRoute] string name)
+        {
+            var parkinglot = parkinglots.Find(x => x.Name == name);
+            parkinglots.Remove(parkinglot);
+            return parkinglots;
+        }
     }
 }
