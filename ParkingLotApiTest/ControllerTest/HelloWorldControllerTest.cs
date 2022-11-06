@@ -12,6 +12,7 @@ namespace ParkingLotApiTest.ControllerTest
     using System.Text;
     using ParkingLotApi.Models;
     using Microsoft.AspNetCore.Components.Routing;
+    using System.Collections.Generic;
 
     public class HelloWorldControllerTest
     {
@@ -50,7 +51,7 @@ namespace ParkingLotApiTest.ControllerTest
         }
 
         [Fact]
-        public async void Should_delete_sold_parkinglot_successfully()
+        public async void Should_see_the_specific_parkinglot_information()
         {
             //given
             var application = new WebApplicationFactory<Program>();
@@ -65,12 +66,12 @@ namespace ParkingLotApiTest.ControllerTest
             await httpClient.PostAsync("/ParkingLot", postBody2);
 
             //when
-            var response = await httpClient.DeleteAsync("/ParkingLot?name=SLB");
+            var response = await httpClient.GetAsync("/ParkingLot?name=SLB");
             //then
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             var responseBody = await response.Content.ReadAsStringAsync();
             var createdParkingLot = JsonConvert.DeserializeObject<ParkingLot>(responseBody);
-            Assert.Equal("thoughtworks", createdParkingLot.Name);
+            Assert.Equal("SLB", createdParkingLot.Name);
         }
     }
 }
